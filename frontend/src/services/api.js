@@ -1,5 +1,5 @@
-const API_BASE_URL = 'http://localhost:5001/api';
-
+const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+const API_BASE_URL = `${baseUrl}/api`;
 // Helper para requisições autenticadas
 const authFetch = async (url, options = {}) => {
   const token = localStorage.getItem('snj_admin_token');
