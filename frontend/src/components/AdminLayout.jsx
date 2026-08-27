@@ -7,6 +7,7 @@ const NAV = [
   { label: 'Notícias',        path: '/admin/noticias',       icon: '📰' },
   { label: 'Membros',         path: '/admin/membros',        icon: '👥' },
   { label: 'Contactos',       path: '/admin/contactos',      icon: '✉️' },
+  { label: 'Sobre Nós',       path: '/admin/sobre',          icon: '📜' },
   { label: 'Configurações',   path: '/admin/configuracoes',  icon: '⚙️' },
 ];
 

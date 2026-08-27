@@ -15,6 +15,7 @@ import AdminNoticias from './pages/AdminNoticias';
 import AdminMembros from './pages/AdminMembros';
 import AdminContactos from './pages/AdminContactos';
 import AdminConfiguracoes from './pages/AdminConfiguracoes';
+import AdminSobre from './pages/AdminSobre';
 import NotFound from './pages/NotFound';
 import { ConfigProvider } from './context/ConfigContext';
 
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/admin/membros" element={<AdminMembros />} />
           <Route path="/admin/contactos" element={<AdminContactos />} />
           <Route path="/admin/configuracoes" element={<AdminConfiguracoes />} />
+          <Route path="/admin/sobre" element={<AdminSobre />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

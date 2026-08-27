@@ -22,6 +22,14 @@ export const ConfigProvider = ({ children }) => {
     const fetchConfig = async () => {
       try {
         const data = await api.getConfiguracoes();
+        
+        // Fazer parsing dos campos JSON (Arrays)
+        ['sobre_valores', 'sobre_corpo_dirigente', 'sobre_linha_tempo'].forEach(k => {
+          if (data[k] && typeof data[k] === 'string') {
+            try { data[k] = JSON.parse(data[k]); } catch(e) { console.error('JSON parse error for', k); }
+          }
+        });
+
         // Mesclar com os valores padrão para garantir que nenhuma chave fique indefinida
         setConfig(prev => ({ ...prev, ...data }));
       } catch (err) {

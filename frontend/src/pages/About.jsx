@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { Shield, Heart, CheckCircle, Award, Star, Users } from 'lucide-react';
+import { useConfig } from '../context/ConfigContext';
 
 const C = { green: '#007A33', gold: '#FCD116', red: '#CE1126', dark: '#0A0F1E', text: '#111827', muted: '#6B7280', light: '#F9FAFB' };
+const IconMap = { Shield, Heart, CheckCircle, Award, Star, Users };
 
 const FadeUp = ({ children, delay = 0, style = {} }) => (
   <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }} style={style}>
@@ -31,31 +33,19 @@ const PageHeader = ({ title, sub }) => (
 );
 
 export default function About() {
-  const values = [
-    { icon: Heart, color: C.red, bg: '#FFF0F0', title: 'Solidariedade', text: 'Apoio incondicional nos momentos difíceis — desemprego, lesões ou exclusões injustas.' },
-    { icon: Shield, color: C.green, bg: '#F0FAF4', title: 'Justiça e Defesa', text: 'Cumprimento rigoroso dos direitos contratuais e humanos fundamentais de cada atleta.' },
-    { icon: CheckCircle, color: '#D97706', bg: '#FFFBEB', title: 'Transparência', text: 'Gestão financeira e negociações conduzidas com absoluta clareza e honestidade.' },
-    { icon: Award, color: '#4F46E5', bg: '#EEF2FF', title: 'Profissionalismo', text: 'Capacitar os atletas para a vida desportiva e prepará-los para uma pós-carreira de sucesso.' },
-  ];
+  const { config, loading } = useConfig();
 
-  const board = [
-    { role: 'Presidente', desc: 'Ex-futebolista profissional, liderando a luta pelos direitos dos jogadores.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80' },
-    { role: 'Vice-Presidente', desc: 'Especialista em administração desportiva e cooperação internacional.', img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80' },
-    { role: 'Assessor Jurídico', desc: 'Advogado desportivo para arbitrar litígios e aconselhar em contratos.', img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80' },
-    { role: 'Tesoureira', desc: 'Garante a distribuição equitativa do fundo social e apoio emergencial.', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80' },
-  ];
+  if (loading) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Carregando...</div>;
 
-  const timeline = [
-    { year: '2021', title: 'Fundação do SNJF-GB', desc: 'Jogadores locais e da diáspora reúnem-se em Bissau para assinar a ata de constituição.' },
-    { year: '2022', title: 'Reconhecimento Oficial', desc: 'Registo no Ministério do Trabalho e primeiro protocolo com a Federação de Futebol da Guiné-Bissau.' },
-    { year: '2023', title: 'Negociações Contratuais', desc: 'Início de conversações para o estabelecimento de garantias salariais mínimas no campeonato nacional.' },
-    { year: '2024', title: 'Fundo de Solidariedade Social', desc: 'Criação do fundo para apoio básico de saúde, alimentação e moradia a futebolistas carenciados.' },
-    { year: '2026', title: 'Digitalização dos Serviços', desc: 'Portal online, cartão de filiação digital com QR Code e gestão transparente dos membros.' },
-  ];
+  const values = config.sobre_valores || [];
+  const board = config.sobre_corpo_dirigente || [];
+  const timeline = config.sobre_linha_tempo || [];
+  const hist1 = config.sobre_historia_1 || '';
+  const hist2 = config.sobre_historia_2 || '';
 
   return (
     <div style={{ fontFamily: '"Inter", sans-serif' }}>
-      <PageHeader title="Sobre o SNJF-GB" sub="Conheça a história, os valores e a equipa que trabalha diariamente pela dignidade dos futebolistas guineenses." />
+      <PageHeader title={`Sobre o ${config.site_sigla || 'SNJF-GB'}`} sub="Conheça a história, os valores e a equipa que trabalha diariamente pela dignidade dos futebolistas guineenses." />
 
       {/* História */}
       <section style={{ background: '#fff', padding: '100px 24px' }}>
@@ -63,8 +53,8 @@ export default function About() {
           <FadeUp>
             <SectionLabel>A Nossa Origem</SectionLabel>
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 800, color: C.text, margin: '0 0 20px' }}>História do Sindicato</h2>
-            <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.85, margin: '0 0 16px' }}>O SNJF-GB foi idealizado por futebolistas ativos e retirados que vivenciaram de perto a desproteção que assombra a carreira desportiva no país. Sem representação sindical, os atletas guineenses estavam sujeitos a incumprimentos salariais, rescisões unilaterais e falta de apoio em lesões físicas graves.</p>
-            <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.85 }}>Com o lema de que "o futebolista é um trabalhador e merece respeito", reunimos apoios da comunidade desportiva nacional e internacional. Conseguimos criar a estrutura inicial legalizada em 2021 para atuar de forma independente em prol de todos os que entram em campo.</p>
+            <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.85, margin: '0 0 16px' }}>{hist1}</p>
+            <p style={{ fontSize: 15, color: C.muted, lineHeight: 1.85 }}>{hist2}</p>
           </FadeUp>
           <FadeUp delay={0.15}>
             <div style={{ position: 'relative', borderRadius: 20, overflow: 'hidden' }}>
@@ -83,7 +73,9 @@ export default function About() {
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 800, color: C.text, margin: 0 }}>Os Nossos Valores</h2>
           </FadeUp>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
-            {values.map(({ icon: Icon, color, bg, title, text }, i) => (
+            {values.map(({ icon, color, bg, title, text }, i) => {
+              const Icon = IconMap[icon] || Star;
+              return (
               <FadeUp key={title} delay={i * 0.08}>
                 <div style={{ background: '#fff', borderRadius: 20, padding: '32px 28px', border: '1px solid #E5E7EB', height: '100%', transition: 'all 0.3s' }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 40px rgba(0,0,0,0.09)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
@@ -94,7 +86,7 @@ export default function About() {
                   <p style={{ fontSize: 13.5, color: C.muted, lineHeight: 1.8, margin: 0 }}>{text}</p>
                 </div>
               </FadeUp>
-            ))}
+            )})}
           </div>
         </div>
       </section>
@@ -128,8 +120,8 @@ export default function About() {
             <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 800, color: C.text, margin: 0 }}>Órgãos de Direção</h2>
           </FadeUp>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 24 }}>
-            {board.map(({ role, desc, img }, i) => (
-              <FadeUp key={role} delay={i * 0.08}>
+            {board.map(({ role, name, desc, img }, i) => (
+              <FadeUp key={role + i} delay={i * 0.08}>
                 <div style={{ background: '#fff', borderRadius: 20, overflow: 'hidden', border: '1px solid #E5E7EB', transition: 'all 0.3s' }}
                   onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 16px 48px rgba(0,0,0,0.1)'; e.currentTarget.style.transform = 'translateY(-4px)'; }}
                   onMouseLeave={e => { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}
@@ -143,6 +135,7 @@ export default function About() {
                   </div>
                   <div style={{ padding: '24px 24px 28px', textAlign: 'center' }}>
                     <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.green, marginBottom: 8 }}>{role}</div>
+                    {name && <h4 style={{ margin: '0 0 8px', fontSize: 16, fontWeight: 700, color: C.text }}>{name}</h4>}
                     <p style={{ fontSize: 13, color: C.muted, lineHeight: 1.7, margin: 0 }}>{desc}</p>
                   </div>
                 </div>
