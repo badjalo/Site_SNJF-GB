@@ -47,7 +47,16 @@ export default function Navbar() {
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
 
           {/* ── Logo ── */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
+          <Link
+            to="/"
+            onClick={() => setOpen(false)}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none',
+              cursor: 'pointer', transition: 'transform 0.2s ease',
+            }}
+            onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+            onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+          >
             <div style={{ width: 46, height: 46, borderRadius: '50%', overflow: 'hidden', border: '2px solid #FCD116', background: '#fff', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <img src="/logo.png" alt="SNJF-GB" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
