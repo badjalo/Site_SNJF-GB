@@ -28,6 +28,9 @@ export default function Navbar() {
   const active = (path) =>
     path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
 
+  const isHome = location.pathname === '/';
+  const isSolid = scrolled || !isHome;
+
   return (
     <>
       <header
@@ -35,7 +38,7 @@ export default function Navbar() {
         style={{
           position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
           transition: 'all 0.35s ease',
-          ...(scrolled
+          ...(isSolid
             ? { background: 'rgba(6,10,21,0.96)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderBottom: '1px solid rgba(255,255,255,0.06)', padding: '10px 0' }
             : { background: 'transparent', padding: '18px 0' }
           ),
