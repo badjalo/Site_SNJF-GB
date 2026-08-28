@@ -108,6 +108,19 @@ export default function AdminSobre() {
     set(key, newArr);
   };
 
+  const handleUploadImage = async (e, index) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      notify('A carregar imagem...', 'success');
+      const data = await api.adminUploadImagem(file);
+      setArrayItem('sobre_corpo_dirigente', index, 'img', data.url);
+      notify('Imagem carregada com sucesso!');
+    } catch (err) {
+      notify(err.message, 'error');
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -187,7 +200,15 @@ export default function AdminSobre() {
                     <Field label="Nome Completo"><input style={inp} value={item.name || ''} onChange={e => setArrayItem('sobre_corpo_dirigente', i, 'name', e.target.value)} /></Field>
                   </div>
                   <Field label="Resumo Profissional"><textarea rows={2} style={inp} value={item.desc} onChange={e => setArrayItem('sobre_corpo_dirigente', i, 'desc', e.target.value)} /></Field>
-                  <Field label="URL da Fotografia"><input style={inp} value={item.img} onChange={e => setArrayItem('sobre_corpo_dirigente', i, 'img', e.target.value)} /></Field>
+                  <Field label="Fotografia (Link ou Carregar do PC)">
+                    <div style={{ display: 'flex', gap: 10 }}>
+                      <input style={{...inp, flex: 1}} value={item.img || ''} onChange={e => setArrayItem('sobre_corpo_dirigente', i, 'img', e.target.value)} placeholder="Cole o URL ou clique em Upload 👉" />
+                      <label style={{ cursor: 'pointer', background: 'rgba(255,255,255,0.1)', padding: '0 16px', borderRadius: 10, display: 'flex', alignItems: 'center', fontSize: 13, fontWeight: 600, border: '1px solid rgba(255,255,255,0.2)', transition: 'background 0.2s' }} onMouseEnter={e => e.currentTarget.style.background='rgba(255,255,255,0.2)'} onMouseLeave={e => e.currentTarget.style.background='rgba(255,255,255,0.1)'}>
+                        📤 Upload
+                        <input type="file" accept="image/*" style={{ display: 'none' }} onChange={(e) => handleUploadImage(e, i)} />
+                      </label>
+                    </div>
+                  </Field>
                 </div>
               ))}
               <button type="button" onClick={() => addArrayItem('sobre_corpo_dirigente', { role: 'Novo Cargo', name: '', desc: '', img: '' })} style={{ background: 'rgba(255,255,255,0.1)', color: '#fff', border: '1px dashed rgba(255,255,255,0.2)', padding: '10px 16px', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, fontWeight: 600 }}>
