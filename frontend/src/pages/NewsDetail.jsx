@@ -37,9 +37,9 @@ export default function NewsDetail() {
     return (
       <div style={{ fontFamily: '"Inter", sans-serif', background: C.light, minHeight: '100vh' }}>
         {/* Breadcrumb Skeleton */}
-        <div style={{ background: '#fff', borderBottom: '1px solid #E5E7EB', paddingTop: 90, paddingBottom: 12 }}>
+        <div style={{ background: '#0A0F1E', paddingTop: 90, paddingBottom: 24 }}>
           <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', gap: 8 }}>
-            <div className="skeleton-shimmer" style={{ height: 14, width: 200, borderRadius: 4 }} />
+            <div className="skeleton-shimmer" style={{ height: 14, width: 200, borderRadius: 4, opacity: 0.3 }} />
           </div>
         </div>
 
@@ -107,13 +107,13 @@ export default function NewsDetail() {
   return (
     <div style={{ fontFamily: '"Inter", sans-serif', background: C.light, minHeight: '100vh' }}>
       {/* Breadcrumb */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #E5E7EB', paddingTop: 90, paddingBottom: 12 }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: C.muted }}>
-          <Link to="/" style={{ color: C.muted, textDecoration: 'none' }}>Início</Link>
-          <ChevronRight size={12} />
-          <Link to="/noticias" style={{ color: C.muted, textDecoration: 'none' }}>Notícias</Link>
-          <ChevronRight size={12} />
-          <span style={{ color: C.text, fontWeight: 600, display: 'inline-block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 250 }}>{noticia.titulo}</span>
+      <div style={{ background: '#0A0F1E', paddingTop: 90, paddingBottom: 24 }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'rgba(255,255,255,0.5)' }}>
+          <Link to="/" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='#fff'} onMouseLeave={e => e.target.style.color='rgba(255,255,255,0.5)'}>Início</Link>
+          <ChevronRight size={14} />
+          <Link to="/noticias" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none', transition: 'color 0.2s' }} onMouseEnter={e => e.target.style.color='#fff'} onMouseLeave={e => e.target.style.color='rgba(255,255,255,0.5)'}>Notícias</Link>
+          <ChevronRight size={14} />
+          <span style={{ color: '#FCD116', fontWeight: 600, display: 'inline-block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 280 }}>{noticia.titulo}</span>
         </div>
       </div>
 
